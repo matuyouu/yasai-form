@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>道の駅 野菜在庫管理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #F0F8F5;
+      margin: 0;
+      padding: 10px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+    .date-area, .nav-buttons {
+      text-align: center;
+      margin: 10px 0;
+    }
+    .nav-buttons button, .submit, .action-btn {
+      padding: 12px 18px;
+      margin: 5px;
+      background-color: #28A745;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .section {
+      display: none;
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    input[type="text"], input[type="number"], input[type="file"], input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    input[type="text"] {
+      ime-mode: active;
+      lang: ja;
+    }
+    .preview img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    }
+    td[contenteditable] {
+      background-color: #f9f9f9;
+      cursor: pointer;
+    }
+    .highlight {
+      background-color: #ffffcc;
+    }
+    .delete-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      font-size: 14px;
+      margin-left: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .suggestion-list {
+      margin-top: 10px;
+    }
+    .suggestion-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="date-area">
+    <label>日付: <input type="date" id="currentDate" onchange="updateInventory()"></label>
+    <button onclick="setToday()">今日の日付に戻る</button>
+  </div>
+  <h1>道の駅 野菜在庫管理</h1>
+  <div class="nav-buttons">
+    <button onclick="showSection('register')">登録画面</button>
+    <button onclick="showSection('inventory')">在庫確認</button>
+    <button onclick="showSection('bulkInput')">一覧入力</button>
+  </div>
+
+  <div class="section" id="register">
+    <h2>野菜情報の登録</h2>
+    <form id="veggieForm">
+      <label>野菜名 *</label>
+      <input type="text" id="name" list="nameList" lang="ja" required>
+      <datalist id="nameList"></datalist>
+      <div id="nameSuggestions" class="suggestion-list"></div>
+
+      <label>農家さんの名前</label>
+      <input type="text" id="farmer" list="farmerList" lang="ja">
+      <datalist id="farmerList"></datalist>
+      <div id="farmerSuggestions" class="suggestion-list"></div>
+
+      <label>個数 *</label>
+      <input type="number" id="quantity" min="0" inputmode="numeric" required>
+
+      <label>画像</label>
+      <input type="file" id="image" accept="image/*">
+
+      <div class="preview">
+        <img id="imagePreview" src="#" alt="画像プレビュー" style="display:none;">
+      </div>
+      <button type="submit" class="submit">入荷</button>
+      <button type="button" onclick="registerMid()" class="submit">途中入荷</button>
+    </form>
+  </div>
+  <div class="section" id="bulkInput">
+  <h2>一覧入力</h2>
+  <label>基にする日付を選択：</label>
+  <input type="date" id="baseDate" onchange="generateBulkList()">
+  <form id="bulkForm">
+    <div id="bulkTableContainer"></div>
+    <button type="submit" class="submit">一括登録</button>
+  </form>
+</div>
+
+
+  <div class="section" id="inventory">
+    <h2>在庫確認</h2>
+    <label>検索</label>
+    <input type="text" id="search" placeholder="野菜名または農家名" oninput="searchTable()" lang="ja">
+    <button onclick="sortTable('name')">野菜名順</button>
+    <button onclick="sortTable('farmer')">農家名順</button>
+    <div id="inventoryContent"></div>
+  </div>
+
+  <div class="section" id="bulk">
+  <h2>一覧登録</h2>
+  <label>基にする日付を選択:</label>
+  <input type="date" id="baseDate">
+  <button onclick="generateBulkList()">一覧生成</button>
+  <form id="bulkForm">
+    <div id="bulkListArea"></div>
+    <button type="submit" class="submit">一覧登録</button>
+  </form>
+</div>
+
+
+  <script>
+    let data = JSON.parse(localStorage.getItem('veggieData') || '{}');
+    const nameSet = new Set();
+    const farmerSet = new Set();
+    let sortAsc = true;
+
+    function saveData() {
+      localStorage.setItem('veggieData', JSON.stringify(data));
+    }
+
+    function setToday() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('currentDate').value = today;
+      updateInventory();
+    }
+
+    function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+  if (id === 'inventory') updateInventory();
+  if (id === 'bulk') document.getElementById('bulkListArea').innerHTML = ''; // 一覧クリア
+}
+
+    function generateBulkList() {
+  const baseDate = document.getElementById('baseDate').value;
+  const baseData = data[baseDate];
+  const container = document.getElementById('bulkTableContainer');
+  container.innerHTML = '';
+
+  if (!baseData || baseData.length === 0) {
+    container.innerHTML = '<p>基にするデータがありません</p>';
+    return;
+  }
+
+  const table = document.createElement('table');
+  table.innerHTML = '<thead><tr><th>野菜名</th><th>農家</th><th>入荷数</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+
+  baseData.forEach((entry, index) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${entry.name}</td>
+      <td>${entry.farmer}</td>
+      <td><input type="number" min="0" name="quantity${index}" data-name="${entry.name}" data-farmer="${entry.farmer}" /></td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+
+    document.getElementById('veggieForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      register(false);
+    });
+
+    document.getElementById('bulkForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const inputs = document.querySelectorAll('#bulkTableContainer input[type="number"]');
+  const date = document.getElementById('currentDate').value;
+  const now = new Date().toLocaleString();
+
+  if (!data[date]) data[date] = [];
+
+  inputs.forEach(input => {
+    const quantity = parseInt(input.value);
+    if (isNaN(quantity) || quantity <= 0) return;
+
+    const name = input.dataset.name;
+    const farmer = input.dataset.farmer;
+    const prevRemain = getPreviousRemain(date, name, farmer);
+
+    data[date].push({
+      name, farmer,
+      quantity, mid: 0,
+      prev: prevRemain,
+      remain: prevRemain + quantity,
+      image: '',
+      updated: now
+    });
+
+    nameSet.add(name);
+    farmerSet.add(farmer);
+  });
+
+  saveData();
+  updateSuggestions();
+  alert("一括登録が完了しました。");
+  showSection('inventory');
+});
+
+
+    function registerMid() {
+      register(true);
+      document.getElementById('veggieForm').reset();
+      document.getElementById('imagePreview').style.display = 'none';
+    }
+
+    function register(isMid) {
+      const name = document.getElementById('name').value.trim();
+      const farmer = document.getElementById('farmer').value.trim() || '不明';
+      const quantity = parseInt(document.getElementById('quantity').value);
+      const image = document.getElementById('imagePreview').src !== '#' ? document.getElementById('imagePreview').src : '';
+      const date = document.getElementById('currentDate').value;
+      const now = new Date().toLocaleString();
+      if (!name || isNaN(quantity)) return;
+
+      if (!data[date]) data[date] = [];
+
+      let entry = data[date].find(d => d.name === name && d.farmer === farmer);
+      if (entry) {
+        if (isMid) {
+          entry.mid += quantity;
+          entry.updated = now;
+        } else {
+          let count = 1;
+          let newName;
+          do {
+            newName = `${name}${count}`;
+            count++;
+          } while (data[date].some(d => d.name === newName && d.farmer === farmer));
+          if (!confirm(`${name}（${farmer}）は重複しています。「${newName}」に変更しますか？`)) return;
+          name = newName;
+        }
+      }
+
+      if (!entry || !isMid) {
+        const yDate = new Date(date);
+        yDate.setDate(yDate.getDate() - 1);
+        const yDateStr = yDate.toISOString().split('T')[0];
+        const prevRemain = data[yDateStr]?.find(d => d.name === name && d.farmer === farmer)?.remain || 0;
+        data[date].push({ name, farmer, quantity: isMid ? 0 : quantity, mid: isMid ? quantity : 0, prev: prevRemain, remain: prevRemain + quantity, image, updated: now });
+      }
+
+      nameSet.add(name);
+      farmerSet.add(farmer);
+      updateSuggestions();
+      saveData();
+      updateInventory();
+    }
+
+    function updateSuggestions() {
+      const nameList = document.getElementById('nameList');
+      const farmerList = document.getElementById('farmerList');
+      nameList.innerHTML = [...nameSet].map(n => `<option value="${n}">${n}</option>`).join('');
+      farmerList.innerHTML = [...farmerSet].map(f => `<option value="${f}">${f}</option>`).join('');
+      document.getElementById('nameSuggestions').innerHTML = [...nameSet].map(n => `<div class='suggestion-item'>${n}<button class='delete-btn' onclick="deleteSuggestion('name','${n}')">×</button></div>`).join('');
+      document.getElementById('farmerSuggestions').innerHTML = [...farmerSet].map(f => `<div class='suggestion-item'>${f}<button class='delete-btn' onclick="deleteSuggestion('farmer','${f}')">×</button></div>`).join('');
+    }
+
+    function deleteSuggestion(type, value) {
+      if (type === 'name') nameSet.delete(value);
+      else farmerSet.delete(value);
+      updateSuggestions();
+    }
+
+    document.getElementById('image').addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const preview = document.getElementById('imagePreview');
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function updateInventory() {
+      const date = document.getElementById('currentDate').value;
+      const container = document.getElementById('inventoryContent');
+      container.innerHTML = '';
+      const list = data[date];
+      if (!list || list.length === 0) {
+        container.innerHTML = '<p>データがありません</p>';
+        return;
+      }
+      const table = document.createElement('table');
+      table.innerHTML = '<thead><tr><th>野菜名（農家）</th><th>入荷</th><th>前日残</th><th>途中入荷</th><th>残数</th><th>最終変更時</th></tr></thead>';
+      const tbody = document.createElement('tbody');
+      list.forEach(d => {
+        d.remain = d.prev + d.quantity + d.mid;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${d.name}（${d.farmer}）</td>
+          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'quantity', this.innerText)">${d.quantity}</td>
+          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'prev', this.innerText)">${d.prev}</td>
+          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'mid', this.innerText)">${d.mid}</td>
+          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'remain', this.innerText)">${d.remain}</td>
+          <td>${d.updated || ''}</td>`;
+        tbody.appendChild(row);
+      });
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+
+    function updateField(date, name, farmer, field, value) {
+      const entry = data[date].find(d => d.name === name && d.farmer === farmer);
+      if (entry && !isNaN(parseInt(value))) {
+        entry[field] = parseInt(value);
+        entry.remain = entry.prev + entry.quantity + entry.mid;
+        entry.updated = new Date().toLocaleString();
+        saveData();
+        updateInventory();
+      }
+    }
+
+    function getPreviousRemain(date, name, farmer) {
+  const yDate = new Date(date);
+  yDate.setDate(yDate.getDate() - 1);
+  const yDateStr = yDate.toISOString().split('T')[0];
+  return data[yDateStr]?.find(d => d.name === name && d.farmer === farmer)?.remain || 0;
+}
+
+
+    function searchTable() {
+      const keyword = document.getElementById('search').value;
+      const rows = document.querySelectorAll('#inventoryContent tbody tr');
+      rows.forEach(row => {
+        if (row.innerText.includes(keyword)) {
+          row.classList.add('highlight');
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          row.classList.remove('highlight');
+        }
+      });
+    }
+
+    function sortTable(field) {
+      const date = document.getElementById('currentDate').value;
+      const list = data[date];
+      if (!list) return;
+      list.sort((a, b) => sortAsc ? a[field].localeCompare(b[field], 'ja') : b[field].localeCompare(a[field], 'ja'));
+      sortAsc = !sortAsc;
+      saveData();
+      updateInventory();
+    }
+    function generateBulkList() {
+  const baseDate = document.getElementById('baseDate').value;
+  if (!data[baseDate]) {
+    alert('選択された日付のデータがありません');
+    return;
+  }
+  const area = document.getElementById('bulkListArea');
+  area.innerHTML = '';
+  data[baseDate].forEach((item, index) => {
+    const html = `
+      <div style="margin-bottom:10px;">
+        <label>野菜名: ${item.name}</label>
+        <input type="hidden" name="name" value="${item.name}">
+        <label>農家名: ${item.farmer}</label>
+        <input type="hidden" name="farmer" value="${item.farmer}">
+        <label>画像:</label>
+        <input type="file" name="image" data-index="${index}" accept="image/*">
+        <div class="preview"><img id="bulkPreview${index}" style="max-width: 100px; display: none;"></div>
+      </div>`;
+    area.insertAdjacentHTML('beforeend', html);
+  });
+}
+
+
+    setToday();
+    showSection('register');
+  </script>
+</body>
+</html>
