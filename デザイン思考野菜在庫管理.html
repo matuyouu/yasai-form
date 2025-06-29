@@ -44,15 +44,7 @@
       font-weight: bold;
       font-size: 16px;
     }
-    input[type="text"], input[type="number"], input[type="file"], input[type="date"] {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
+    
     input[type="text"] {
       ime-mode: active;
       lang: ja;
@@ -99,9 +91,395 @@
       justify-content: space-between;
       margin-bottom: 5px;
     }
+    /* 入力フォームの基本スタイル */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+input[type="date"] {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* サジェストエリア（吹き出し）の見た目調整 */
+.suggestion-list {
+  position: absolute;
+  background: #fdfbe7; /* 柔らかい薄黄色に変更 */
+  border: 2px solid #f0c040; /* 明るめのオレンジ */
+  border-radius: 6px;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+  margin-top: 2px; /* 隙間を小さく */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* ほんのり影をつけて浮かせる */
+}
+/* サジェスト内の1項目 */
+.suggestion-list div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-list div:hover {
+  background-color: #f0f0f0;
+}
+.suggestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f2d37a;
+  font-size: 16px;
+}
+
+.suggestion:hover {
+  background-color: #fff2cc;
+}
+
+.suggestion .delete-btn {
+  background: transparent;
+  color: #c33;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+
+#login-screen h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.login-buttons button {
+  width: 200px;
+  padding: 15px 20px;
+  margin: 10px;
+  font-size: 18px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-buttons button:hover {
+  background-color: #218838;
+}
+
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+}
+
+.login-card h2 {
+  margin-bottom: 30px;
+  font-size: 22px;
+  color: #333;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-buttons button {
+  padding: 16px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-btn {
+  background-color: #007bff;
+}
+
+.admin-btn:hover {
+  background-color: #0069d9;
+}
+
+.customer-btn {
+  background-color: #28a745;
+}
+
+.customer-btn:hover {
+  background-color: #218838;
+}
+
+
+#login-screen h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+#login-screen button {
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#login-screen button:first-of-type {
+  background-color: #4CAF50; /* 緑：管理者用 */
+  color: white;
+}
+
+#login-screen button:first-of-type:hover {
+  background-color: #45a049;
+}
+
+#login-screen button:last-of-type {
+  background-color: #2196F3; /* 青：お客様用 */
+  color: white;
+}
+
+#login-screen button:last-of-type:hover {
+  background-color: #1e88e5;
+}
+body.login-mode {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+body:not(.login-mode) {
+  display: block;
+}
+.section {
+  margin-top: 30px;
+}
+#login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #e0f7fa, #f1f8e9);
+  text-align: center;
+  border: 3px solid #aee1f9;
+  border-radius: 16px;
+  max-width: 400px;
+  margin: auto;
+  padding: 40px 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+#main-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.section {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 24px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-content img {
+  max-height: 200px;
+  display: block;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-content img {
+  max-height: 200px;
+  display: block;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 24px;
+  color: #888;
+  cursor: pointer;
+}
+#searchButton {
+  background-color: #ff9800;      /* オレンジ */
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+#searchButton:hover {
+  background-color: #fb8c00;
+}
+.active-toggle {
+  background-color: #007bff;
+  color: white;
+}
+.active-toggle {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* 簡単入力の表をきれいに整える */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.styled-table th,
+.styled-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.styled-table th {
+  background-color: #f0f0f0;
+}
+
+#bulkListArea table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#bulkListArea th, #bulkListArea td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+#bulkListArea tr {
+  display: table-row;
+}
+
+#bulkListArea td, #bulkListArea th {
+  display: table-cell;
+}
+
   </style>
 </head>
 <body>
+    <div id="login-screen">
+         <div class="login-card">
+  <h2>ログイン種別を選んでください</h2>
+   <div class="login-buttons">
+  <button onclick="loginAs('admin')">管理者用</button>
+  <button onclick="loginAs('customer')">お客様用</button>
+</div>
+</div>
+</div>
+<!-- ✅ 管理者名入力フォーム -->
+<div id="admin-login-form" style="display: none; text-align:center; padding: 20px;">
+  <h3>農家名を入力してください</h3>
+  <input type="text" id="adminNameInput" placeholder="例：田中農園" style="padding:10px; font-size:16px; width:80%; margin-bottom: 10px;">
+  <br>
+  <!-- ✅ ログイン確定ボタン -->
+  <button onclick="confirmAdminLogin()" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    ログイン
+  </button>
+  <br><br>
+ 
+</div>
+
+
+<!-- ✅ ログイン後のアプリ本体。別のdivで囲うこと！ -->
+<div id="main-app" style="display:none;">
+  <div style="text-align: right; padding: 10px;">
+  <button id="logout-button" onclick="logout()" style="padding: 8px 16px; font-size: 14px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    ログアウト
+  </button>
+</div>
+
+  <!-- UI全体がここ -->
   <div class="date-area">
     <label>日付: <input type="date" id="currentDate" onchange="updateInventory()"></label>
     <button onclick="setToday()">今日の日付に戻る</button>
@@ -110,19 +488,28 @@
   <div class="nav-buttons">
     <button onclick="showSection('register')">登録画面</button>
     <button onclick="showSection('inventory')">在庫確認</button>
-    <button onclick="showSection('bulkInput')">一覧入力</button>
+    <button onclick="showSection('bulkInput')">簡単入力</button>
   </div>
+    <!-- 管理者専用 -->
+  <div class="admin-only">
+<div class="section" id="register">
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+  <h2>野菜情報の登録</h2>
+  <div style="display: flex; align-items: center; gap: 5px;">
+    <label>農家名（固定）</label>
+    <input type="text" id="fixedFarmerInput" placeholder="例：田中農園" style="padding: 5px; font-size: 14px;">
+  </div>
+</div>
 
-  <div class="section" id="register">
     <h2>野菜情報の登録</h2>
     <form id="veggieForm">
       <label>野菜名 *</label>
-      <input type="text" id="name" list="nameList" lang="ja" required>
+      <input type="text" id="name" list="nameList" lang="ja" required autocomplete="off">
       <datalist id="nameList"></datalist>
       <div id="nameSuggestions" class="suggestion-list"></div>
 
       <label>農家さんの名前</label>
-      <input type="text" id="farmer" list="farmerList" lang="ja">
+      <input type="text" id="farmer" list="farmerList" lang="ja" autocomplete="off">
       <datalist id="farmerList"></datalist>
       <div id="farmerSuggestions" class="suggestion-list"></div>
 
@@ -139,31 +526,28 @@
       <button type="button" onclick="registerMid()" class="submit">途中入荷</button>
     </form>
   </div>
-  <div class="section" id="bulkInput">
-  <h2>一覧入力</h2>
-  <label>基にする日付を選択：</label>
-  <input type="date" id="baseDate" onchange="generateBulkList()">
-  <form id="bulkForm">
-    <div id="bulkTableContainer"></div>
-    <button type="submit" class="submit">一括登録</button>
-  </form>
-</div>
 
-
-  <div class="section" id="inventory">
-    <h2>在庫確認</h2>
-    <label>検索</label>
-    <input type="text" id="search" placeholder="野菜名または農家名" oninput="searchTable()" lang="ja">
-    <button onclick="sortTable('name')">野菜名順</button>
-    <button onclick="sortTable('farmer')">農家名順</button>
-    <div id="inventoryContent"></div>
+<div class="section" id="bulkInput">
+  <h2>簡単入力</h2>
+  <!-- 🔽 基にする日付の選択と検索 -->
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+    <label>基にする日付：</label>
+    <input type="date" id="baseDate">
+    <button type="button" onclick="generateBulkList()">🔍 検索</button>
   </div>
 
-  <div class="section" id="bulk">
-  <h2>一覧登録</h2>
-  <label>基にする日付を選択:</label>
-  <input type="date" id="baseDate">
-  <button onclick="generateBulkList()">一覧生成</button>
+ <!-- 🔽 表示切り替え -->
+  <div style="margin-bottom: 10px;">
+    <button type="button" id="bulkModeButton" onclick="toggleBulkMode()">全体を表示</button>
+  </div>
+
+<!-- ✅ 登録する日付の入力欄（ID変更） -->
+<div style="margin-bottom: 10px;">
+  <label>登録する日付：</label>
+  <input type="date" id="bulkCurrentDate">
+</div>
+
+  <!-- 🔽 登録フォーム -->
   <form id="bulkForm">
     <div id="bulkListArea"></div>
     <button type="submit" class="submit">一覧登録</button>
@@ -171,53 +555,251 @@
 </div>
 
 
+  </div>
+
+<div class="section" id="inventory">
+    <h2>在庫確認</h2>
+      <div style="margin-bottom: 10px;">
+  <button onclick="setInventoryMode('own')" id="ownViewBtn" class="active-toggle">👤 自分の在庫</button>
+  <button onclick="setInventoryMode('all')" id="allViewBtn">🌐 全体の在庫</button>
+</div>
+    <label>検索</label>
+<input type="text" id="search" placeholder="野菜名または農家名" lang="ja">
+<button id="searchButton" onclick="searchTable()">🔍 検索</button>
+<button onclick="sortTable('name')">野菜名順</button>
+<button onclick="sortTable('farmer')">農家名順</button>
+<label>
+  <input type="checkbox" id="showAllToggle" onchange="updateInventory()">
+  全体を表示
+</label>
+
+    <div id="inventoryContent"></div>
+  </div>
+
+  <!-- たとえば登録フォーム、在庫確認画面など -->
+</div>
+
+ 
   <script>
+window.bulkShowAllMode = false;
+let bulkViewMode = 'self';
+
+function setToday() {
+  const today = new Date().toISOString().split('T')[0];
+  console.log("設定した日付:", today);
+  const dateInput = document.getElementById('currentDate');
+  if (dateInput) {
+    dateInput.value = today;
+    updateInventory(); // 📌 在庫表示も更新
+  }
+}
+
+
+    let userType = null;
+
+
+
+function disableAdminFeatures() {
+  // すべての入力、ボタンを無効に
+  const inputs = document.querySelectorAll('input, textarea, select, button');
+  inputs.forEach(el => {
+    // 「在庫確認」だけ使えるようにする
+    if (!el.closest('#stock-view-area') && el.id !== 'logout-button') {
+      el.disabled = true;
+    }
+  });
+
+  // 管理者用のUIを非表示（例：登録フォーム、一括登録など）
+  const adminOnlySections = document.querySelectorAll('.admin-only');
+  adminOnlySections.forEach(el => el.style.display = 'none');
+}
+
     let data = JSON.parse(localStorage.getItem('veggieData') || '{}');
     const nameSet = new Set();
     const farmerSet = new Set();
     let sortAsc = true;
-
-    function saveData() {
-      localStorage.setItem('veggieData', JSON.stringify(data));
-    }
-
-    function setToday() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('currentDate').value = today;
-      updateInventory();
-    }
-
-    function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.getElementById(id).style.display = 'block';
-  if (id === 'inventory') updateInventory();
-  if (id === 'bulk') document.getElementById('bulkListArea').innerHTML = ''; // 一覧クリア
+    
+async function saveData() {
+  if (!adminName) return;
+  try {
+    await setDoc(doc(db, "inventory", adminName), data);
+    console.log("データをFirestoreに保存しました");
+  } catch (e) {
+    console.error("Firestore保存エラー:", e);
+  }
 }
 
-    function generateBulkList() {
+function toggleBulkMode() {
+  bulkViewMode = (bulkViewMode === 'self') ? 'all' : 'self';
+  document.getElementById('bulkModeButton').textContent =
+    (bulkViewMode === 'self') ? '全体を表示' : '自分のデータだけ表示';
+  generateBulkList(); // 再表示
+}
+
+let inventoryViewMode = 'own'; // 'own' = 自分, 'all' = 全体
+let userRole = null;
+let adminName = null;
+
+function loginAs(role) {
+  userRole = role;
+  document.getElementById('login-screen').style.display = 'none';
+
+  if (role === 'admin') {
+    document.getElementById('admin-login-form').style.display = 'block';
+  } else {
+    document.getElementById('main-app').style.display = 'block';
+    document.querySelectorAll('.admin-only').forEach(e => e.style.display = 'none');
+    setToday();
+    showSection('inventory');
+  }
+}
+function logout() {
+  // ログイン画面を表示し、他を非表示に
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'block';
+  document.getElementById('admin-login-form').style.display = 'none';
+
+  // 全てのセクションを非表示
+  document.querySelectorAll('.section').forEach(section => {
+    section.style.display = 'none';
+  });
+
+  // 管理者専用エリアを非表示
+  document.querySelectorAll('.admin-only').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  // 入力フォームをクリア
+  document.querySelectorAll('form').forEach(f => f.reset?.());
+
+  // プレビュー画像なども非表示に（必要な場合）
+  const preview = document.getElementById('imagePreview');
+  if (preview) preview.style.display = 'none';
+
+  // 状態変数クリア
+  userRole = null;
+  adminName = null;
+
+  // ログインモードスタイルを戻す
+  document.body.classList.add('login-mode');
+
+  // 保存しているログイン情報も削除（必要なら）
+  localStorage.removeItem('adminName');
+}
+
+
+
+
+function confirmAdminLogin() {
+  const input = document.getElementById('adminNameInput').value.trim();
+  if (!input) {
+    alert('名前を入力してください');
+    return;
+  }
+  adminName = input;
+  document.getElementById('admin-login-form').style.display = 'none';
+  finalizeLogin();
+}
+
+
+function finalizeLogin() {
+  document.getElementById('main-app').style.display = 'block';
+  document.body.classList.remove('login-mode');
+
+  // 管理者かどうかでUI制御
+  if (userRole === 'admin') {
+    document.querySelectorAll('.admin-only').forEach(e => e.style.display = 'block');
+  } else {
+    document.querySelectorAll('.admin-only').forEach(e => e.style.display = 'none');
+  }
+ setToday();
+  loadSets(); // ✅ 各自の名前に基づいたセットを読み込む
+}
+
+
+
+function showSection(id) {
+  // すべて非表示にしてから
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+
+  // お客様用ログイン時は在庫確認画面以外は表示しない
+  if (userRole === 'customer' && id !== 'inventory') {
+    return;
+  }
+
+  // 指定の画面だけ表示
+  const target = document.getElementById(id);
+  if (target) target.style.display = 'block';
+
+  if (id === 'inventory') updateInventory();
+  if (id === 'bulk') document.getElementById('bulkListArea').innerHTML = '';
+}
+function setTodayToCurrentDate() {
+  const today = new Date().toISOString().split('T')[0];
+  const input = document.getElementById('bulkCurrentDate');
+  if (input) {
+    input.value = today;
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTodayToCurrentDate();
+});
+
+function generateBulkList() {
   const baseDate = document.getElementById('baseDate').value;
-  const baseData = data[baseDate];
-  const container = document.getElementById('bulkTableContainer');
+  const container = document.getElementById('bulkListArea');
   container.innerHTML = '';
 
-  if (!baseData || baseData.length === 0) {
+  if (!baseDate) {
+    container.innerHTML = '<p>日付を選択してください。</p>';
+    return;
+  }
+
+  const source = (bulkViewMode === 'all')
+    ? data[baseDate] || []
+    : (data[baseDate]?.filter(d => d.farmer === adminName) || []);
+
+  if (!source || source.length === 0) {
     container.innerHTML = '<p>基にするデータがありません</p>';
     return;
   }
 
   const table = document.createElement('table');
-  table.innerHTML = '<thead><tr><th>野菜名</th><th>農家</th><th>入荷数</th></tr></thead>';
+  table.innerHTML = `
+  <thead>
+    <tr>
+      <th>野菜名</th>
+      <th>農家名</th>
+      <th>入荷数</th>       <!-- ✅ 入荷数列を追加 -->
+      <th>画像</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+`;
+
   const tbody = document.createElement('tbody');
 
-  baseData.forEach((entry, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${entry.name}</td>
-      <td>${entry.farmer}</td>
-      <td><input type="number" min="0" name="quantity${index}" data-name="${entry.name}" data-farmer="${entry.farmer}" /></td>
-    `;
-    tbody.appendChild(row);
-  });
+source.forEach((entry, index) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${entry.name}</td>
+    <td>${entry.farmer}</td>
+    <td>
+      <input type="number" name="quantity${index}" min="0" style="width: 80px;"
+             data-name="${entry.name}" data-farmer="${entry.farmer}">
+    </td>
+    <td>
+      <input type="file" name="photo${index}" accept="image/*"
+             data-name="${entry.name}" data-farmer="${entry.farmer}" />
+    </td>
+    <td>
+      <button type="button" onclick="this.closest('tr').remove()">削除</button>
+    </td>
+  `;
+  tbody.appendChild(row);
+});
 
   table.appendChild(tbody);
   container.appendChild(table);
@@ -229,39 +811,109 @@
       register(false);
     });
 
-    document.getElementById('bulkForm').addEventListener('submit', function(e) {
+const targetDate = document.getElementById('currentDate').value;
+document.getElementById('bulkForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const inputs = document.querySelectorAll('#bulkTableContainer input[type="number"]');
-  const date = document.getElementById('currentDate').value;
+  const baseDate = document.getElementById('baseDate').value;
+  const targetDate = document.getElementById('bulkCurrentDate').value;
   const now = new Date().toLocaleString();
 
-  if (!data[date]) data[date] = [];
+  // ✅ 一覧テーブルの行データを集める
+  const rows = document.querySelectorAll('#bulkListArea table tbody tr');
+  const newEntries = [];
 
-  inputs.forEach(input => {
-    const quantity = parseInt(input.value);
-    if (isNaN(quantity) || quantity <= 0) return;
+  rows.forEach((row, index) => {
+    const name = row.querySelector(`input[name="quantity${index}"]`)?.dataset.name;
+    const farmer = row.querySelector(`input[name="quantity${index}"]`)?.dataset.farmer;
+    const quantity = parseInt(row.querySelector(`input[name="quantity${index}"]`)?.value || '0');
+    const fileInput = row.querySelector(`input[name="photo${index}"]`);
+    const file = fileInput?.files?.[0];
 
-    const name = input.dataset.name;
-    const farmer = input.dataset.farmer;
-    const prevRemain = getPreviousRemain(date, name, farmer);
+    // 空欄はスキップ
+    if (!name || !farmer || isNaN(quantity)) return;
 
-    data[date].push({
-      name, farmer,
-      quantity, mid: 0,
-      prev: prevRemain,
-      remain: prevRemain + quantity,
-      image: '',
-      updated: now
-    });
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const image = event.target.result || '';
+      if (!data[targetDate]) data[targetDate] = [];
 
-    nameSet.add(name);
-    farmerSet.add(farmer);
+      const prevRemain = getPreviousRemain(targetDate, name, farmer);
+      data[targetDate].push({
+        name,
+        farmer,
+        quantity,
+        mid: 0,
+        prev: prevRemain,
+        remain: prevRemain + quantity,
+        image,
+        updated: now
+      });
+
+      // 前日残の保存（条件付き）
+      if (baseDate === getYesterday(targetDate)) {
+        data[targetDate].forEach(entry => {
+          entry.prev = entry.remain;
+        });
+      }
+
+      saveData();
+      updateInventory();
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      // 画像が無い場合でも登録
+      if (!data[targetDate]) data[targetDate] = [];
+
+      const prevRemain = getPreviousRemain(targetDate, name, farmer);
+      data[targetDate].push({
+        name,
+        farmer,
+        quantity,
+        mid: 0,
+        prev: prevRemain,
+        remain: prevRemain + quantity,
+        image: '',
+        updated: now
+      });
+
+      if (baseDate === getYesterday(targetDate)) {
+        data[targetDate].forEach(entry => {
+          entry.prev = entry.remain;
+        });
+      }
+
+      saveData();
+      updateInventory();
+    }
   });
 
-  saveData();
-  updateSuggestions();
-  alert("一括登録が完了しました。");
-  showSection('inventory');
+  alert('一覧登録が完了しました');
+});
+
+// 補助関数: 昨日の日付を取得
+function getYesterday(dateStr) {
+  const d = new Date(dateStr);
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().split('T')[0];
+}
+
+// 農家名固定欄 → 通常の farmer 入力欄へ自動入力
+document.getElementById('fixedFarmerInput').addEventListener('input', () => {
+  const fixedName = document.getElementById('fixedFarmerInput').value.trim();
+  const farmerInput = document.getElementById('farmer');
+  if (fixedName && document.activeElement !== farmerInput) {
+    farmerInput.value = fixedName;
+  }
+});
+
+// farmer欄フォーカス時にも反映
+document.getElementById('farmer').addEventListener('focus', () => {
+  const fixedName = document.getElementById('fixedFarmerInput').value.trim();
+  if (fixedName) {
+    document.getElementById('farmer').value = fixedName;
+  }
 });
 
 
@@ -270,6 +922,7 @@
       document.getElementById('veggieForm').reset();
       document.getElementById('imagePreview').style.display = 'none';
     }
+    
 
     function register(isMid) {
       const name = document.getElementById('name').value.trim();
@@ -284,20 +937,27 @@
 
       let entry = data[date].find(d => d.name === name && d.farmer === farmer);
       if (entry) {
-        if (isMid) {
-          entry.mid += quantity;
-          entry.updated = now;
-        } else {
-          let count = 1;
-          let newName;
-          do {
-            newName = `${name}${count}`;
-            count++;
-          } while (data[date].some(d => d.name === newName && d.farmer === farmer));
-          if (!confirm(`${name}（${farmer}）は重複しています。「${newName}」に変更しますか？`)) return;
-          name = newName;
-        }
-      }
+  if (isMid) {
+    entry.mid += quantity;
+    entry.updated = now;
+  } else {
+    let count = 1;
+    let newName;
+    do {
+      newName = `${name}${count}`;
+      count++;
+    } while (data[date].some(d => d.name === newName && d.farmer === farmer));
+    
+    if (!confirm(`${name}（${farmer}）は重複しています。「${newName}」に変更しますか？`)) return;
+
+    // ✅ OK を押したときにフォームを初期化
+    document.getElementById('veggieForm').reset();
+    document.getElementById('imagePreview').style.display = 'none';
+
+    name = newName;
+  }
+}
+
 
       if (!entry || !isMid) {
         const yDate = new Date(date);
@@ -308,20 +968,149 @@
       }
 
       nameSet.add(name);
-      farmerSet.add(farmer);
-      updateSuggestions();
-      saveData();
-      updateInventory();
-    }
+farmerSet.add(farmer);
+saveSets();  // ✅ 保存！
+updateSuggestions();
+saveData();
+updateInventory();
+
+        if (!isMid) {
+    document.getElementById('veggieForm').reset();
+    document.getElementById('imagePreview').style.display = 'none';
+  }  // 🔽 farmer欄に固定欄の値を復元
+  const fixedName = document.getElementById('fixedFarmerInput').value.trim();
+  if (fixedName) {
+    document.getElementById('farmer').value = fixedName;
+  }
+
+}
+    
 
     function updateSuggestions() {
-      const nameList = document.getElementById('nameList');
-      const farmerList = document.getElementById('farmerList');
-      nameList.innerHTML = [...nameSet].map(n => `<option value="${n}">${n}</option>`).join('');
-      farmerList.innerHTML = [...farmerSet].map(f => `<option value="${f}">${f}</option>`).join('');
-      document.getElementById('nameSuggestions').innerHTML = [...nameSet].map(n => `<div class='suggestion-item'>${n}<button class='delete-btn' onclick="deleteSuggestion('name','${n}')">×</button></div>`).join('');
-      document.getElementById('farmerSuggestions').innerHTML = [...farmerSet].map(f => `<div class='suggestion-item'>${f}<button class='delete-btn' onclick="deleteSuggestion('farmer','${f}')">×</button></div>`).join('');
+  const nameInput = document.getElementById('name');
+  const farmerInput = document.getElementById('farmer');
+  const nameSuggestions = document.getElementById('nameSuggestions');
+  const farmerSuggestions = document.getElementById('farmerSuggestions');
+
+  nameSuggestions.innerHTML = '';
+  farmerSuggestions.innerHTML = '';
+
+  const currentInput = document.activeElement;
+  let suggestions, container, set;
+
+  if (currentInput === nameInput) {
+    if (nameInput.value.trim() === '') return; // 入力が空なら終了
+    suggestions = Array.from(nameSet).filter(name => name.includes(nameInput.value));
+    container = nameSuggestions;
+    set = nameSet;
+  } else if (currentInput === farmerInput) {
+    if (farmerInput.value.trim() === '') return; // 入力が空なら終了
+    suggestions = Array.from(farmerSet).filter(farmer => farmer.includes(farmerInput.value));
+    container = farmerSuggestions;
+    set = farmerSet;
+  } else {
+    return;
+  }
+
+  suggestions.forEach(value => {
+    const suggestionDiv = document.createElement('div');
+    suggestionDiv.className = 'suggestion';
+
+    const label = document.createElement('span');
+    label.textContent = value;
+    label.onclick = () => {
+      currentInput.value = value;
+      container.innerHTML = '';
+    };
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '×';
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.onclick = (e) => {
+      e.stopPropagation();
+      set.delete(value);
+      saveSets();
+      updateSuggestions();
+    };
+
+    suggestionDiv.appendChild(label);
+    suggestionDiv.appendChild(deleteBtn);
+    container.appendChild(suggestionDiv);
+  });
+}
+
+function deleteEntry(date, name, farmer) {
+  if (!confirm(`${name}（${farmer}）を削除しますか？`)) return;
+  if (!data[date]) return;
+
+  data[date] = data[date].filter(entry => !(entry.name === name && entry.farmer === farmer));
+
+  saveData();         // Firestore保存
+  updateInventory();  // 表示更新
+}
+
+async function saveSets() {
+  if (!adminName) return;
+  try {
+    const setsRef = doc(db, "suggestions", adminName);
+    await setDoc(setsRef, {
+      nameSet: Array.from(nameSet),
+      farmerSet: Array.from(farmerSet)
+    });
+    console.log("検索候補をFirestoreに保存しました");
+  } catch (e) {
+    console.error("Firestoreへの候補保存エラー:", e);
+  }
+}
+
+async function loadSets() {
+  if (!adminName) return;
+  try {
+    const setsRef = doc(db, "suggestions", adminName);
+    const docSnap = await getDoc(setsRef);
+    if (docSnap.exists()) {
+      const sets = docSnap.data();
+      nameSet.clear();
+      farmerSet.clear();
+      (sets.nameSet || []).forEach(name => nameSet.add(name));
+      (sets.farmerSet || []).forEach(farmer => farmerSet.add(farmer));
+      console.log("検索候補をFirestoreから読み込みました");
+    } else {
+      console.log("Firestoreに検索候補がありません（初回）");
     }
+  } catch (e) {
+    console.error("Firestoreからの候補読み込みエラー:", e);
+  }
+}
+
+
+
+function confirmAdminLogin() {
+  const input = document.getElementById('adminNameInput').value.trim();
+  if (!input) {
+    alert('名前を入力してください');
+    return;
+  }
+  adminName = input;
+  document.getElementById('admin-login-form').style.display = 'none';
+  finalizeLogin();
+}
+async function finalizeLogin() {
+  document.getElementById('main-app').style.display = 'block';
+  document.body.classList.remove('login-mode');
+
+  if (userRole === 'admin') {
+    document.querySelectorAll('.admin-only').forEach(e => e.style.display = 'block');
+  } else {
+    document.querySelectorAll('.admin-only').forEach(e => e.style.display = 'none');
+  }
+
+  setToday();
+  await loadData();   // 野菜在庫データを読み込み
+  await loadSets();   // 🔁 検索候補をFireStoreから読み込み
+  updateSuggestions(); // UI反映
+}
+
 
     function deleteSuggestion(type, value) {
       if (type === 'name') nameSet.delete(value);
@@ -341,29 +1130,53 @@
         reader.readAsDataURL(file);
       }
     });
+function setInventoryMode(mode) {
+  inventoryViewMode = mode;
+  updateInventory();
+
+  // ボタンの見た目を切り替え
+  document.getElementById('ownViewBtn').classList.toggle('active-toggle', mode === 'own');
+  document.getElementById('allViewBtn').classList.toggle('active-toggle', mode === 'all');
+}
 
     function updateInventory() {
       const date = document.getElementById('currentDate').value;
       const container = document.getElementById('inventoryContent');
       container.innerHTML = '';
       const list = data[date];
+
+const filtered = (inventoryViewMode === 'own' && adminName)
+  ? list.filter(d => d.farmer === adminName)
+  : list;
+
+if (!filtered || filtered.length === 0) {
+  container.innerHTML = '<p>該当するデータがありません</p>';
+  return;
+}
+
       if (!list || list.length === 0) {
         container.innerHTML = '<p>データがありません</p>';
         return;
       }
       const table = document.createElement('table');
-      table.innerHTML = '<thead><tr><th>野菜名（農家）</th><th>入荷</th><th>前日残</th><th>途中入荷</th><th>残数</th><th>最終変更時</th></tr></thead>';
-      const tbody = document.createElement('tbody');
-      list.forEach(d => {
-        d.remain = d.prev + d.quantity + d.mid;
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${d.name}（${d.farmer}）</td>
-          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'quantity', this.innerText)">${d.quantity}</td>
-          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'prev', this.innerText)">${d.prev}</td>
-          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'mid', this.innerText)">${d.mid}</td>
-          <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'remain', this.innerText)">${d.remain}</td>
-          <td>${d.updated || ''}</td>`;
+      table.innerHTML = '<thead><tr><th>野菜名（農家）</th><th>入荷</th><th>前日残</th><th>途中入荷</th><th>残数</th><th>最終変更時</th><th>削除</th></tr></thead>';
+     const tbody = document.createElement('tbody');
+filtered.forEach(d => {
+  d.remain = d.prev + d.quantity + d.mid;
+ const row = document.createElement('tr');
+row.innerHTML = `
+  <td style="cursor:pointer; color:#007bff; text-decoration:underline;" 
+      onclick="showDetail('${d.name}', '${d.farmer}', '${d.remain}', \`${d.image || ''}\`)">
+    ${d.name}（${d.farmer}）
+  </td>
+  <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'quantity', this.innerText)">${d.quantity}</td>
+  <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'prev', this.innerText)">${d.prev}</td>
+  <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'mid', this.innerText)">${d.mid}</td>
+  <td contenteditable onblur="updateField('${date}', '${d.name}', '${d.farmer}', 'remain', this.innerText)">${d.remain}</td>
+  <td>${d.updated || ''}</td>
+  <td><button onclick="deleteEntry('${date}', '${d.name}', '${d.farmer}')">🗑</button></td>
+`;
+
         tbody.appendChild(row);
       });
       table.appendChild(tbody);
@@ -381,6 +1194,33 @@
       }
     }
 
+
+    function showDetail(name, farmer, remain, image) {
+  document.getElementById('modalName').textContent = name;
+  document.getElementById('modalFarmer').textContent = farmer;
+  document.getElementById('modalRemain').textContent = remain;
+  
+  const img = document.getElementById('modalImage');
+  if (image && image !== '#') {
+    img.src = image;
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+
+  document.getElementById('detailModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('detailModal').style.display = 'none';
+}
+
+
+function closeModal() {
+  document.getElementById('detailModal').style.display = 'none';
+}
+
+
     function getPreviousRemain(date, name, farmer) {
   const yDate = new Date(date);
   yDate.setDate(yDate.getDate() - 1);
@@ -389,18 +1229,19 @@
 }
 
 
-    function searchTable() {
-      const keyword = document.getElementById('search').value;
-      const rows = document.querySelectorAll('#inventoryContent tbody tr');
-      rows.forEach(row => {
-        if (row.innerText.includes(keyword)) {
-          row.classList.add('highlight');
-          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          row.classList.remove('highlight');
-        }
-      });
+  function searchTable() {
+  const keyword = document.getElementById('search').value.trim();
+  const rows = document.querySelectorAll('#inventoryContent tbody tr');
+
+  rows.forEach(row => {
+    if (keyword && row.innerText.includes(keyword)) {
+      row.classList.add('highlight');
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      row.classList.remove('highlight');
     }
+  });
+}
 
     function sortTable(field) {
       const date = document.getElementById('currentDate').value;
@@ -411,32 +1252,194 @@
       saveData();
       updateInventory();
     }
-    function generateBulkList() {
-  const baseDate = document.getElementById('baseDate').value;
-  if (!data[baseDate]) {
-    alert('選択された日付のデータがありません');
-    return;
+  
+
+document.getElementById('name').addEventListener('input', updateSuggestions);
+document.getElementById('name').addEventListener('focus', updateSuggestions);
+document.getElementById('farmer').addEventListener('input', updateSuggestions);
+document.getElementById('farmer').addEventListener('focus', updateSuggestions);
+
+
+    loadSets();
+
+    showSection('register');
+    
+let lastDate = new Date().toDateString();
+
+setInterval(() => {
+  const nowDate = new Date().toDateString();
+  if (nowDate !== lastDate) {
+    lastDate = nowDate;
+    setToday(); // 自動で日付を更新
+    console.log("日付が変更されたため、在庫を更新します");
   }
-  const area = document.getElementById('bulkListArea');
-  area.innerHTML = '';
-  data[baseDate].forEach((item, index) => {
-    const html = `
-      <div style="margin-bottom:10px;">
-        <label>野菜名: ${item.name}</label>
-        <input type="hidden" name="name" value="${item.name}">
-        <label>農家名: ${item.farmer}</label>
-        <input type="hidden" name="farmer" value="${item.farmer}">
-        <label>画像:</label>
-        <input type="file" name="image" data-index="${index}" accept="image/*">
-        <div class="preview"><img id="bulkPreview${index}" style="max-width: 100px; display: none;"></div>
-      </div>`;
-    area.insertAdjacentHTML('beforeend', html);
-  });
+}, 60000); // 1分ごとにチェック（60000ミリ秒）
+
+window.onload = () => {
+  setToday();            // ✅ 今日の日付を設定
+  loadSets();            // ✅ 名前セットを読み込み
+  showSection('register'); // ✅ 初期表示セクションへ
+};
+
+  </script>
+ <div id="detailModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle">詳細情報</h3>
+    <p><strong>野菜名:</strong> <span id="modalName"></span></p>
+    <p><strong>農家:</strong> <span id="modalFarmer"></span></p>
+    <p><strong>残数:</strong> <span id="modalRemain"></span></p>
+    <img id="modalImage" src="" alt="画像" style="max-width:100%; margin-top:10px; border-radius:8px;">
+  </div>
+</div>
+<script type="module">
+  // Firebase SDK の読み込み（既に貼り付け済みの部分）
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdRe-4MOC9sUQbSNx05QOAWajU0wbwGDQ",
+    authDomain: "michinoeki-inventory.firebaseapp.com",
+    projectId: "michinoeki-inventory",
+    storageBucket: "michinoeki-inventory.appspot.com",
+    messagingSenderId: "118454948353",
+    appId: "1:118454948353:web:3c8d314a8f8167d34ce600",
+    measurementId: "G-43G0N7GSSZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);  // ✅ Firestore を初期化
+  window.db = db; // グローバルで使えるようにする
+  // 🔸 野菜データの保存（adminName 単位）
+async function saveDataToFirestore() {
+  if (!adminName) return;
+  try {
+    await setDoc(doc(db, "veggieData", adminName), data);
+    console.log("✅ Firestoreにデータ保存済み");
+  } catch (e) {
+    console.error("❌ Firestore保存エラー:", e);
+  }
 }
 
+// 🔸 野菜データの読み込み
+async function loadDataFromFirestore() {
+  if (!adminName) return;
+  try {
+    const docSnap = await getDoc(doc(db, "veggieData", adminName));
+    if (docSnap.exists()) {
+      data = docSnap.data();
+      console.log("✅ Firestoreからデータ読み込み完了");
+    } else {
+      console.log("🆕 Firestoreにデータがありません（新規ユーザー）");
+      data = {};
+    }
+    updateInventory();  // 初期表示更新
+  } catch (e) {
+    console.error("❌ Firestore読み込みエラー:", e);
+  }
+}
 
-    setToday();
-    showSection('register');
-  </script>
+</script>
+<!-- ✅ アンケート案内 固定ボックス（縮小対応） -->
+<div id="survey-box" class="survey-box">
+  <div id="survey-content">
+    <strong>アンケートにご協力お願いします：</strong><br>
+    <a href="https://forms.gle/UsXbtmbjH3qqE15PA" target="_blank">
+      アンケートはこちら
+    </a>
+  </div>
+  <button id="toggleSurveyBtn">縮小</button>
+</div>
+
+<style>
+  .survey-box {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    max-width: 300px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .survey-box.minimized {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .survey-box.minimized #survey-content {
+    display: none;
+  }
+
+  #toggleSurveyBtn {
+    margin-top: 5px;
+    padding: 4px 8px;
+    font-size: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .survey-box.minimized #toggleSurveyBtn {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 50%;
+    padding: 0;
+    background: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .survey-box.minimized #toggleSurveyBtn:hover {
+    background: #0056cc;
+  }
+</style>
+
+
+<script>
+  document.getElementById('toggleSurveyBtn').addEventListener('click', function () {
+    const box = document.getElementById('survey-box');
+    const isMinimized = box.classList.contains('minimized');
+
+    if (isMinimized) {
+      box.classList.remove('minimized');
+      this.textContent = '縮小';
+    } else {
+      box.classList.add('minimized');
+      this.textContent = '＋';
+    }
+  });
+  // ✅ 30秒後に自動で縮小（ミリ秒指定）
+setTimeout(() => {
+  const box = document.getElementById('survey-box');
+  const btn = document.getElementById('toggleSurveyBtn');
+  if (!box.classList.contains('minimized')) {
+    box.classList.add('minimized');
+    btn.textContent = '＋';
+  }
+}, 30000);  // ← ここを変更すれば時間を調整可能（30000 = 30秒）
+
+</script>
+
+
 </body>
 </html>
